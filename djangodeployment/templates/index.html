@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Django Project</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+            font-size: 16px;
+            width: 300px;
+        }
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #58dc93;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .Latlong_data {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 20px;
+        }
+        strong {
+            display: block;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>LET'S TRAVEL</h1>
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="Address" placeholder="ADDRESS">
+        <button type="submit">GET TOURIST PLACES FOR ME</button>
+    </form>
+
+    {% if weather_info %}
+    <div class="Latlong_data">
+        <h1>Weather of {{ ADDRESS }} looks like this...</h1>
+        <h3>Temperature: {{ weather_info.temp }}</h3>
+        <h3>Main Weather: {{ weather_info.main }}</h3>
+        <h3>Clouds: {{ weather_info.clouds }}</h3>
+        <h2>With this weather I suggest you visit these places you will surely enjoy. </h2>
+        <h3>Have Fun... </h3>
+        <ul>
+            {% for item in result_list %}
+            <li>
+                <strong>Name:</strong> {{ item.name }}<br>
+                <strong>Rating:</strong> {{ item.rating }}<br>
+                <strong>Vicinity:</strong> {{ item.vicinity }}<br>
+                
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</body>
+</html>
